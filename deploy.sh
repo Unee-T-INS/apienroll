@@ -16,8 +16,11 @@
 #	  We rely on the Travis CI settings that have been called when the
 #	  .travis.yml script is called.
 #	- The user has not configured his machine properly.
-#
-# Step 1: Setup AWS CLI
+
+echo '# START - deploy.sh'
+echo '# we are building the ' $1
+echo '# TRAVIS_PROFILE is' $TRAVIS_PROFILE
+
 if ! aws configure --profile $TRAVIS_PROFILE list
 then
     # We tell the user about the issue
@@ -44,4 +47,7 @@ then
 fi
 
 # Step 2: Run Make
+
     make $1
+
+echo '# END - deploy.sh'	
