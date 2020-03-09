@@ -43,6 +43,7 @@ deploy:
    edge: true
    on:
       branch: master
+
  # production
  - provider: script
    script: TRAVIS_PROFILE=$AWS_PROFILE_PROD TRAVIS_AWS_ACCESS_KEY_ID=$AWS_ACCOUNT_USER_ID_PROD TRAVIS_AWS_SECRET_ACCESS_KEY=$AWS_ACCOUNT_SECRET_PROD TRAVIS_AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION ./deploy.sh prod
@@ -50,13 +51,6 @@ deploy:
    on:
       tags: true
       branch: master
- # ???
- - provider: script
-   edge: true
-   script: curl -sL https://git.io/goreleaser | bash
-   on:
-     tags: true
-     condition: $TRAVIS_OS_NAME = linux
 
 env:
   - GO111MODULE=on
