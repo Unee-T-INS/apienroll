@@ -36,7 +36,7 @@ endef
 # - TRAVIS_PROFILE_DEV
 # - TRAVIS_PROFILE_PROD
 # - TRAVIS_PROFILE_DEMO
-# - EMAIL_FOR_NOTIFICATION_GENERIC
+# - EMAIL_FOR_NOTIFICATION_APIENROLL
 # - PRIVATE_SUBNET_1
 # - PRIVATE_SUBNET_2
 # - PRIVATE_SUBNET_3
@@ -45,7 +45,7 @@ endef
 
 UPJSON = '.profile |= "$(TRAVIS_PROFILE_DEV)" \
 		  |.stages.staging |= (.domain = "apienroll.$(call ssm,STAGE).$(call ssm,DOMAIN)" | .zone = "$(call ssm,STAGE).$(call ssm,DOMAIN)") \
-		  | .actions[0].emails |= ["apienroll+$(call ssm,EMAIL_FOR_NOTIFICATION_GENERIC)"] \
+		  | .actions[0].emails |= ["$(call ssm,EMAIL_FOR_NOTIFICATION_APIENROLL)"] \
 		  | .lambda.vpc.subnets |= [ "$(call ssm,PRIVATE_SUBNET_1)", "$(call ssm,PRIVATE_SUBNET_2)", "$(call ssm,PRIVATE_SUBNET_3)" ] \
 		  | .lambda.vpc.security_groups |= [ "$(call ssm,DEFAULT_SECURITY_GROUP)", "$(call ssm,LAMBDA_TO_RDS_SECURITY_GROUP)" ]'
 
@@ -53,7 +53,7 @@ UPJSON = '.profile |= "$(TRAVIS_PROFILE_DEV)" \
 
 PRODUPJSON = '.profile |= "$(TRAVIS_PROFILE_PROD)" \
 		  |.stages.staging |= (.domain = "apienroll.$(call ssm-prod,DOMAIN)" | .zone = "$(call ssm-prod,DOMAIN)") \
-		  | .actions[0].emails |= ["apienroll+$(call ssm-prod,EMAIL_FOR_NOTIFICATION_GENERIC)"] \
+		  | .actions[0].emails |= ["$(call ssm-prod,EMAIL_FOR_NOTIFICATION_APIENROLL)"] \
 		  | .lambda.vpc.subnets |= [ "$(call ssm-prod,PRIVATE_SUBNET_1)", "$(call ssm-prod,PRIVATE_SUBNET_2)", "$(call ssm-prod,PRIVATE_SUBNET_3)" ] \
 		  | .lambda.vpc.security_groups |= [ "$(call ssm-prod,DEFAULT_SECURITY_GROUP)", "$(call ssm-prod,LAMBDA_TO_RDS_SECURITY_GROUP)" ]'
 
@@ -61,7 +61,7 @@ PRODUPJSON = '.profile |= "$(TRAVIS_PROFILE_PROD)" \
 
 DEMOUPJSON = '.profile |= "$(TRAVIS_PROFILE_DEMO)" \
 		  |.stages.staging |= (.domain = "apienroll.$(call ssm-demo,STAGE).$(call ssm-demo,DOMAIN)" | .zone = "$(call ssm-demo,STAGE).$(call ssm-demo,DOMAIN)") \
-		  | .actions[0].emails |= ["apienroll+$(call ssm-demo,EMAIL_FOR_NOTIFICATION_GENERIC)"] \
+		  | .actions[0].emails |= ["$(call ssm-demo,EMAIL_FOR_NOTIFICATION_APIENROLL)"] \
 		  | .lambda.vpc.subnets |= [ "$(call ssm-demo,PRIVATE_SUBNET_1)", "$(call ssm-demo,PRIVATE_SUBNET_2)", "$(call ssm-demo,PRIVATE_SUBNET_3)" ] \
 		  | .lambda.vpc.security_groups |= [ "$(call ssm-demo,DEFAULT_SECURITY_GROUP)", "$(call ssm-demo,LAMBDA_TO_RDS_SECURITY_GROUP)" ]'
 
